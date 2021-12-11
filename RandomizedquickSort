@@ -1,0 +1,31 @@
+import numpy as np
+def partitionArray(A,i,j,Pidx):
+    temp=A[Pidx]
+    A[Pidx]=A[i]
+    A[i]=temp
+    p=i+1
+    q=j
+    while p<=q:
+        if A[p]<A[i]:
+            p+=1
+        elif A[q]>A[i]:
+            q-=1
+        else:
+            A[[p,q]]=A[[q,p]]
+            p+=1
+            q-=1
+    A[[q,i]]=A[[i,q]]
+    return q
+
+
+def quicksortArray(A,i,j):
+    if i==j or i<0 or j<0 or i>j:
+        return
+    else:
+        pIdx=np.random.randint(i,j)
+        idx=partitionArray(A,i,j,pIdx)
+        quicksortArray(A,i,idx-1)
+        quicksortArray(A,idx+1,j)
+        
+A = np.random.permutation(np.arange(10))
+quicksortArray(A,0,len(A)-1)
